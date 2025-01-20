@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Console appender to log to console -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Rolling File Appender with Time-Based Rolling Policy and Size-Based Triggering -->
+    <appender name="ARCHIVE_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>C:/Users/Jitesh/logs/application.log</file>
+
+        <!-- Rolling Policy: Time-Based Rolling -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>C:/Users/Jitesh/logs/application-%d{yyyy-MM-dd}.log</fileNamePattern> <!-- Archive file pattern -->
+            <maxHistory>1</maxHistory> <!-- Keep logs for 30 days -->
+            <totalSizeCap>1GB</totalSizeCap> <!-- Total size of archived logs (combined) -->
+        </rollingPolicy>
+
+        <!-- Triggering Policy: Size-Based Triggering -->
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>10MB</maxFileSize> <!-- Max file size before it rolls -->
+        </triggeringPolicy>
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Root logger definition -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ARCHIVE_FILE"/>
+    </root>
+
+    <!-- Specific logger definition for debugging, for example -->
+    <logger name="com.report" level="DEBUG">
+        <appender-ref ref="ARCHIVE_FILE"/>
+    </logger>
+
+</configuration>
+
+
+
